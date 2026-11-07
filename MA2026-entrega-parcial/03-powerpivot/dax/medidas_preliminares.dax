@@ -1,0 +1,45 @@
+Receita Bruta := SUMX(fReservas, fReservas[Diarias] * fReservas[Valor_Diaria])
+
+Receita de Hospedagem := SUMX(fReservas, fReservas[Diarias] * fReservas[Valor_Diaria] - fReservas[Desconto])
+
+Qtd Reservas := DISTINCTCOUNT(fReservas[ID_Reserva])
+
+Ticket Médio := DIVIDE([Receita de Hospedagem], [Qtd Reservas])
+
+Diárias Vendidas := SUM(fReservas[Diarias])
+
+ADR := DIVIDE([Receita de Hospedagem], [Diárias Vendidas])
+
+Custo Total := SUMX(fReservas, fReservas[Diarias] * RELATED(dAcomodacao[Custo]))
+
+Margem Bruta % := DIVIDE([Receita de Hospedagem] - [Custo Total], [Receita de Hospedagem])
+
+Diárias Disponíveis := SUMX(dHotel, dHotel[Qtd_Quartos]) * COUNTROWS(dCalendario)
+
+Taxa de Ocupação := DIVIDE([Diárias Vendidas], [Diárias Disponíveis])
+
+RevPAR := DIVIDE([Receita de Hospedagem], [Diárias Disponíveis])
+
+Meta Diárias := SUM(fMetas[Meta_Diarias])
+
+% Meta Diárias := DIVIDE([Diárias Vendidas], [Meta Diárias])
+
+Cresc. MoM % := VAR Atual = [Receita de Hospedagem] VAR Anterior = CALCULATE([Receita de Hospedagem], DATEADD(dCalendario[Data], -1, MONTH)) RETURN IF(NOT ISBLANK(Atual), DIVIDE(Atual - Anterior, Anterior))
+
+Conf Linhas fReservas := COUNTROWS(fReservas)
+
+Conf Linhas Rejeitados := COUNTROWS(Rejeitados)
+
+Conf Linhas Lidas := [Conf Linhas fReservas] + [Conf Linhas Rejeitados]
+
+Conf Reservas sem Acomodacao := COUNTROWS(FILTER(fReservas, ISBLANK(RELATED(dAcomodacao[Acomodacao])))) + 0
+
+Conf Reservas sem Hotel := COUNTROWS(FILTER(fReservas, ISBLANK(RELATED(dHotel[Hotel])))) + 0
+
+Conf Reservas sem Data := COUNTROWS(FILTER(fReservas, ISBLANK(RELATED(dCalendario[Mes])))) + 0
+
+Conf Metas sem Mes := COUNTROWS(FILTER(fMetas, ISBLANK(RELATED(dCalendario[Mes])))) + 0
+
+Conf PK Duplicada := COUNTROWS(dAcomodacao) - DISTINCTCOUNT(dAcomodacao[Cod_Acomodacao]) + COUNTROWS(dHotel) - DISTINCTCOUNT(dHotel[Cod_Hotel]) + COUNTROWS(dCalendario) - DISTINCTCOUNT(dCalendario[Data])
+
+Conf Dif Receita := ROUND(SUM(fReservas[Valor_Liquido]) - [Receita de Hospedagem], 2)

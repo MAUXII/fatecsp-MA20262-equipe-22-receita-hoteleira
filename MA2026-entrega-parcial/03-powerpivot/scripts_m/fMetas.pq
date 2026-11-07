@@ -1,0 +1,2 @@
+// fMetas
+Table.TransformColumnTypes(Etapa2_Origem{[Item="fMetas",Kind="Table"]}[Data],{{"Mes_Inicio",type date},{"Meta_Ocupacao",type number},{"Meta_Diarias",type number},{"Diarias_Disponiveis",Int64.Type}},"pt-BR")

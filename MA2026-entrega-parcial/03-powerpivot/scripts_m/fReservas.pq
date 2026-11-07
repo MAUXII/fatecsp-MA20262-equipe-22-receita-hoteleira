@@ -1,0 +1,2 @@
+// fReservas
+Table.TransformColumnTypes(Etapa2_Origem{[Item="fReservas",Kind="Table"]}[Data],{{"Data_Checkin",type date},{"Hora_Checkin",type time},{"Diarias",Int64.Type},{"Valor_Diaria",Currency.Type},{"Desconto",Currency.Type},{"Valor_Bruto",Currency.Type},{"Valor_Liquido",Currency.Type}},"pt-BR")
