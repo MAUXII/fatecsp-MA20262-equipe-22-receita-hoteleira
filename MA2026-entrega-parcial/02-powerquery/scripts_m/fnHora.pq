@@ -1,0 +1,2 @@
+// fnHora
+(v as any) as nullable time => try if v = null then null else if v is time then v else if v is datetime then DateTime.Time(v) else if v is number then Time.From(v-Number.RoundDown(v)) else Time.FromText(Text.Trim(Text.From(v)),"pt-BR") otherwise null

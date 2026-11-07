@@ -1,0 +1,2 @@
+// fnLerReservas
+(b as binary) as table => let Livro=Excel.Workbook(b,null,true), Aba=Table.SelectRows(Livro,each [Kind]="Sheet"){0}[Data], Cabecalho=Table.PromoteHeaders(Aba,[PromoteAllScalars=true]), Padrao=fnPadronizarColunas(Cabecalho), Linha=Table.AddIndexColumn(Padrao,"Linha_Origem",2,1,Int64.Type) in Linha

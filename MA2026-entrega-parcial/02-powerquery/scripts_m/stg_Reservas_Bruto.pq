@@ -1,0 +1,2 @@
+// stg_Reservas_Bruto
+let Arquivos=Folder.Files(pPastaReservas), Planilhas=Table.SelectRows(Arquivos,each Text.Lower([Extension])=".xlsx" and not Text.StartsWith([Name],"~$")), Ordenados=Table.Sort(Planilhas,{{"Name",Order.Ascending}}), Dados=Table.AddColumn(Ordenados,"Dados",each fnLerReservas([Content])), Nomes=Table.RenameColumns(Table.SelectColumns(Dados,{"Name","Dados"}),{{"Name","Arquivo_Origem"}}), Expandida=Table.ExpandTableColumn(Nomes,"Dados",ColunasAlvo & {"Linha_Origem"}) in Expandida

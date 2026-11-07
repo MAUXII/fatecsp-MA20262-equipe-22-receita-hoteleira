@@ -1,0 +1,2 @@
+// Conf_Reconciliacao
+let Lidas=Table.RowCount(stg_Reservas_Bruto), Aceitas=Table.RowCount(fReservas), Rejeitadas=Table.RowCount(Rejeitados) in #table(type table[Verificacao=text,Linhas=Int64.Type],{{"1. Linhas lidas",Lidas},{"2. Aceitas em fReservas",Aceitas},{"3. Registradas em Rejeitados",Rejeitadas},{"4. Diferença",Lidas-Aceitas-Rejeitadas}})
